@@ -1,0 +1,108 @@
+<app-navbar></app-navbar>
+<div class="container-fluid login-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
+                <p style="float: right;margin-top: 5rem;">
+                    <button mat-raised-button style="background-color: rgb(22, 20, 20); color: white;" routerLink="/dashboard">Back</button>
+                </p>
+            </div>
+            <div class="col-md-10" style="margin-top: 7rem;">
+                <mat-card style="height:630px">
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-card style="height:600px">
+                            <mat-card-title class="text-center" style="font-size: 18px;">Search Appointments
+                            </mat-card-title>
+                            <mat-card-content>
+                                <form #slotSearchForm="ngForm">
+                                    <p>
+                                        <mat-form-field appearance="outline" class="example-full-width" >
+                                            <mat-label>Date</mat-label>
+                                            <input matInput [matDatepicker]="picker" required readonly 
+                                            #slotDate="ngModel" name="slotDate" [(ngModel)]="searchData.slotDate">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </p>
+                                    <p class="text-center">
+                                        <button mat-raised-button style="color: azure; background-color: rgb(0, 119, 255);" (click)="searchAppointments()">Search Appointments</button>
+                                    </p>
+                                </form>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-8">
+                        <mat-card style="height:600px">
+                            <mat-card-title class="text-center" style="font-size: 18px;">Appointments Details
+                            </mat-card-title>
+                            <mat-card-content style="margin-top: 2rem;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="text-center" style="font-weight: 600;" *ngIf="slotDaten">{{slotDaten}}
+                                            <span style="color: green;margin-left: 1rem;">
+                                                OPEN - <span class="badge badge-success"   style="padding: 10px;
+                                                border-radius: 50%;
+                                                font-size: 12px;">{{availableCount}}</span>
+                                            </span>
+
+                                            <span style="color: red;margin-left: 1rem;">
+                                                BOOKED - <span class="badge badge-danger" style="    padding: 10px;
+                                                border-radius: 50%;
+                                                font-size: 12px;">{{bookedCount}}</span>
+                                            </span>
+                                        </p>
+                                        <h6 class="text-center" *ngIf="slotDaten">Morning</h6> 
+                                        <mat-card *ngIf="noSlotsMsg">
+                                            <mat-card-content>
+                                                <h6 class="text-center"   style="color: red;">{{noSlotsMsg}}</h6>
+                                            </mat-card-content>
+                                        </mat-card>
+
+                                    </div>
+                                            <div class="col-md-3" *ngFor="let data of appointmentsArray">
+                                                <mat-card *ngIf="(data.slotSession == '1')" style="border: 1px solid#09519e !important;
+                                                ;">
+                                                    <mat-card-title class="text-center">
+                                                    </mat-card-title>
+                                                    <mat-card-content>
+                                                        <span class="text-center timeSlots">{{data.startTime}} - {{data.endTime}}</span>
+                                                        <p class="text-center available" *ngIf="data.appointment =='Available'"> <i class="fa fa-circle" aria-hidden="true"></i> OPEN</p>
+                                                        <p class="text-center booked" *ngIf="data.appointment =='Booked'"> <i class="fa fa-dot-circle-o" aria-hidden="true"></i> BOOKED</p>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div> &nbsp;
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <h6 class="text-center" *ngIf="slotDaten">Evening</h6> 
+                                        <mat-card *ngIf="noSlotsMsg">
+                                            <mat-card-content>
+                                                <h6 class="text-center"   style="color: red;">{{noSlotsMsg}}</h6>
+                                            </mat-card-content>
+                                        </mat-card>
+
+                                    </div>
+                                        <div class="col-md-3" *ngFor="let data of appointmentsArray">
+                                            <mat-card *ngIf="(data.slotSession == '2')" style="border: 1px solid#09519e !important;" >
+                                                <mat-card-title class="text-center">
+                                                </mat-card-title>
+                                                <mat-card-content>
+                                                    <span class="text-center timeSlots">{{data.startTime}} - {{data.endTime}}</span>
+                                                    <p class="text-center available" *ngIf="data.appointment =='Available'"> <i class="fa fa-circle" aria-hidden="true"></i> OPEN</p>
+                                                    <p class="text-center booked" *ngIf="data.appointment =='Booked'"> <i class="fa fa-dot-circle-o" aria-hidden="true"></i> BOOKED</p>                                                </mat-card-content>
+                                            </mat-card>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </mat-card>
+            </div>
+            <div class="col-md-1" style="float: right;margin-top: 5rem;">
+                <button mat-raised-button style="background-color: rgb(0, 73, 92); color: white;" routerLink="/book-appointment">Appointment List</button>
+            </div>
+        </div>
+    </div>
+</div>

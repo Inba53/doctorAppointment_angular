@@ -1,0 +1,77 @@
+<app-navbar></app-navbar>
+<div class="container-fluid login-bg">
+    <div class="container mt-4">
+        <br><br>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <button mat-raised-button routerLink="/register" style="color: white; background-color: rgb(24, 22, 22);" >Back</button>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+            </div>
+        </div>
+        <h5 class="text-center" style="color: white;">
+            Appointment List
+        </h5>
+        <mat-table style="margin-top: 15px;" #table [dataSource]="dataSource">
+            <ng-container matColumnDef="sn">
+                <mat-header-cell style="color:  rgb(0, 119, 255); font-size: 14px;" *matHeaderCellDef> SI.No. </mat-header-cell>
+                <mat-cell *matCellDef="let element;let i = index;">
+                    {{ (i+1) + (paginator.pageIndex * paginator.pageSize) }}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="slotDate">
+                <mat-header-cell style="color:  rgb(0, 119, 255); font-size: 14px;" *matHeaderCellDef>Date</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.slotDate}} </mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="slotSession">
+                <mat-header-cell style="color:  rgb(0, 119, 255); font-size: 14px;" *matHeaderCellDef>Session</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <p *ngIf="element.slotSession == 1">Morning</p>
+                    <p *ngIf="element.slotSession == 2">Evening</p>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="startTime">
+                <mat-header-cell style="color:  rgb(0, 119, 255); font-size: 14px;" *matHeaderCellDef> Start Time</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.startTime}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="endTime">
+                <mat-header-cell style="color:  rgb(0, 119, 255); font-size: 14px;" *matHeaderCellDef>End Time</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.endTime}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="pateientName">
+                <mat-header-cell style="color:  rgb(0, 119, 255); font-size: 14px;" *matHeaderCellDef>Pateient Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.pateientName}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="pateientNumber">
+                <mat-header-cell style="color:  rgb(0, 119, 255); font-size: 14px;" *matHeaderCellDef>Contact</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.pateientNumber}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="appointment">
+                <mat-header-cell style="color:  rgb(0, 119, 255); font-size: 14px;" *matHeaderCellDef>Appointment</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <p *ngIf="element.appointment == 'Booked'">
+                        <span style="color: green;">Booked</span>
+                    </p>
+                    <p *ngIf="element.appointment == 'Available'">
+                        <span style="color: red;">Not Booked</span>
+                    </p>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator #paginator [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+</div>

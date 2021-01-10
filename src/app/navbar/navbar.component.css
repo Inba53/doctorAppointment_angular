@@ -1,0 +1,22 @@
+nav{
+    height: 5rem;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+}
+
+.navbar-brand{
+   color: white !important;
+   font-weight: 400;
+}
+.nav-link{
+    color: white !important;
+    font-weight: 400;
+    font-size: 18px;
+ }
+
+ .navbar
+{
+  overflow: hidden;
+  background: rgb(0, 119, 255);
+  z-index: 3;
+  height: 50px ;
+}

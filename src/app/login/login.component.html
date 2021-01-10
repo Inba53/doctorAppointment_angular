@@ -1,0 +1,49 @@
+<div class="container-fluid login-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"  style="margin-top: 7rem;">
+          <p class="text-center" style="font-size: 25px;">Doctor Appointment System</p>
+          <mat-card>
+            <mat-card-title class="text-center" style="font-size: 18px; font-weight: 500; color: rgb(0, 119, 255);">Login</mat-card-title>
+            <mat-card-content>
+              <form #loginForm="ngForm">
+                <p>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Username</mat-label>
+                    <input type="text" matInput placeholder="Username" required #userName="ngModel" name="userName"
+                      [(ngModel)]="loginData.userName">
+                  </mat-form-field>
+                </p>
+  
+                <p>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput placeholder="Password" required #userPassword="ngModel"
+                      name="userPassword" [(ngModel)]="loginData.userPassword">
+                  </mat-form-field>
+                </p>
+  
+  
+                <p class="text-center">
+                  <button mat-raised-button style="background-color: rgb(0, 119, 255); color: azure;" (click)="login()">Proceed</button>
+                </p>
+                <p>
+                  <u>Note:</u>
+                </p>
+                <p class="text-center">
+                 <b> For Doctor</b><br> Username = "doctor" & Password = "doctor"
+                </p>
+                <p class="text-center">
+                  <b> For Patient</b><br> Username = "patient" & Password = "patient"
+                 </p>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-md-4"> 
+       
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,245 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid login-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4" style="margin-top: 7rem;">
+                <h3 class="welcome" *ngIf="doctor">Welcome {{User}}</h3>
+                <mat-card *ngIf="doctor">
+                    <mat-card-title class="text-center" style="font-size: 18px;">Appoinment Slot Allocation
+                    </mat-card-title>
+                    <mat-card-content>
+                        <form #slotaddForm="ngForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <mat-form-field appearance="outline" class="example-full-width">
+                                            <mat-label>Date</mat-label>
+                                            <input matInput [matDatepicker]="picker" required readonly [min]="today"
+                                                #slotDate="ngModel" name="slotDate"  [(ngModel)]="slotData.slotDate">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </p>
+                                    <p>
+                                        <mat-form-field appearance="outline" class="example-full-width">
+                                            <mat-label>Slot Session</mat-label>
+                                            <mat-select required #slotSession="ngModel" name="slotSession"
+                                                (selectionChange)="getSession()" [(ngModel)]="slotData.slotSession">
+                                                <mat-option value="" disabled selected>-- Select --</mat-option>
+                                                <mat-option value="1">Morning</mat-option>
+                                                <mat-option value="2">Evening</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </p>
+                                    <p>
+                                        <mat-form-field appearance="outline" class="example-full-width">
+                                            <mat-label>Start Time</mat-label>
+                                            <mat-select required #startTime="ngModel" name="startTime"
+                                                [(ngModel)]="slotData.startTime">
+                                                <mat-option value="" disabled selected>-- HH --</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="06AM">06 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="07AM">07 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="08AM">08 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="09AM">09 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="10AM">10 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="11AM">11 :00 AM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="04PM">04 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="05PM">05 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="06PM">06 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="07PM">07 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="08PM">08 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="09PM">09 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="10PM">10 :00 PM</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </p>
+                                    <p>
+                                        <mat-form-field appearance="outline" class="example-full-width">
+                                            <mat-label>End Time</mat-label>
+                                            <mat-select required #endTime="ngModel" name="endTime"
+                                                [(ngModel)]="slotData.endTime">
+                                                <mat-option value="" disabled selected>-- HH --</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="06AM">06 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="07AM">07 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="08AM">08 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="09AM">09 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="10AM">10 :00 AM</mat-option>
+                                                <mat-option *ngIf="morningFlag" value="11AM">11 :00 AM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="04PM">04 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="05PM">05 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="06PM">06 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="07PM">07 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="08PM">08 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="09PM">09 :00 PM</mat-option>
+                                                <mat-option *ngIf="evgFlag" value="10PM">10 :00 PM</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-center">
+                                <button mat-raised-button style="background-color:  rgb(0, 119, 255); color: white;" (click)="saveSlot()">Add Slot</button>
+                            </p>
+                        </form>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col-md-4">
+                <p style="float: right;margin-top: 5rem;" *ngIf="doctor">
+                    <button mat-raised-button style="background-color: rgb(0, 73, 92); color: white;" routerLink="/register">View Slots</button>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-card *ngIf="patient">
+                    <mat-card-title class="text-center" style="font-size: 18px;">Search Appoinment Availability
+                    </mat-card-title>
+                    <mat-card-content>
+                        <form #slotavailableForm="ngForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <mat-form-field appearance="outline" class="example-full-width">
+                                            <mat-label>D.O.B</mat-label>
+                                            <input matInput [matDatepicker]="picker1" required readonly [min]="today"
+                                                #slotDate="ngModel" name="slotDate" [(ngModel)]="searchData.slotDate">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <p class="text-center">
+                                <button mat-raised-button style="background-color: rgb(0, 119, 255); color: azure;" (click)="searchAvailability()">Search</button>
+                            </p>
+                        </form>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col-md-8">
+                <mat-card *ngIf="patient" style="height: 600px;">
+                    <mat-card-title class="text-center" style="font-size: 18px;">Appoinment Availability
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="text-center" style="font-weight: 600;" *ngIf="slotDaten">{{slotDaten}}
+                                    <span style="color: green;margin-left: 1rem;">
+                                        Available - <span class="badge badge-success" style="padding: 10px;
+                                        border-radius: 50%;
+                                        font-size: 12px;">{{availableCount}}</span>
+                                    </span>
+
+                                    <span style="color: red;margin-left: 1rem;">
+                                        Booked - <span class="badge badge-danger" style="    padding: 10px;
+                                        border-radius: 50%;
+                                        font-size: 12px;">{{bookedCount}}</span>
+                                    </span>
+                                </p>
+                                <h6 class="text-center" *ngIf="slotDaten">Morning</h6>
+                                <mat-card *ngIf="noSlotsMsg">
+                                    <mat-card-content>
+                                        <h6 class="text-center"   style="color: red;">{{noSlotsMsg}}</h6>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                            <div class="col-md-3" *ngFor="let data of appointmentsArray">
+                                <mat-card *ngIf="(data.slotSession == '1')" style="border: 1px solid#09519e !important;
+                                        ;">
+                                    <mat-card-title class="text-center">
+                                    </mat-card-title>
+                                    <mat-card-content>
+                                        <p class="text-center timeSlots">{{data.startTime}} - {{data.endTime}}</p>
+                                        <p class="text-center available" *ngIf="data.appointment =='Available'">
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"  data-backdrop="static" data-keyboard="false" data-target="#myModal" (click)="bookSlot(data)"><span class="spinner-grow spinner-grow-sm"></span> Book Now</button>
+                                        </p>
+                                        <p class="text-center booked" *ngIf="data.appointment =='Booked'">
+                                            <button type="button" class="btn btn-danger btn-sm" disabled>Booked</button>
+
+                                        </p>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div> &nbsp;
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h6 class="text-center" *ngIf="slotDaten">Evening</h6>
+                                <mat-card *ngIf="noSlotsMsg" >
+                                    <mat-card-content>
+                                        <h6 class="text-center"   style="color: red;">{{noSlotsMsg}}</h6>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                            <div class="col-md-3" *ngFor="let data of appointmentsArray">
+                                <mat-card *ngIf="(data.slotSession == '2')"
+                                    style="border: 1px solid#09519e !important;">
+                                    <mat-card-title class="text-center">
+                                    </mat-card-title>
+                                    <mat-card-content>
+                                        <p class="text-center timeSlots">{{data.startTime}} - {{data.endTime}}</p>
+                                        <p class="text-center available" *ngIf="data.appointment =='Available'">
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"  data-backdrop="static" data-keyboard="false" data-target="#myModal" (click)="bookSlot(data)"><span class="spinner-grow spinner-grow-sm"></span> Book Now</button>
+                                        </p>
+                                        <p class="text-center booked" *ngIf="data.appointment =='Booked'">
+                                            <button type="button" class="btn btn-danger btn-sm" disabled>Booked</button>
+                                        </p>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Appointment Booking</h4>
+          <button type="button" id="closeBtn" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <p class="text-center" *ngIf="bookingData">
+                Are you sure want to book on <b>{{bookDate}}</b>  at <b>{{bookingData.startTime}} - {{bookingData.endTime}}</b>  ?
+            </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center">Appointment Form</p>
+                    <form #bookingSlotForm="ngForm">
+                        <p class="text-center">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Patient Name</mat-label>
+                                <input type="text" matInput placeholder="Pateient Name" onkeypress="return /[a-z]/i.test(event.key)"  required #pateientName="ngModel" name="pateientName"
+                                  [(ngModel)]="patientData.pateientName">
+                              </mat-form-field>
+                        </p>
+                        <p class="text-center">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Contact Number</mat-label>
+                                <input type="text" minlength="10" maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" matInput placeholder="Pateient Name" required #pateientNumber="ngModel" name="pateientNumber"
+                                  [(ngModel)]="patientData.pateientNumber">
+                              </mat-form-field>
+                        </p>
+                        <p class="text-center">
+                            <button mat-raised-button style="color: white; background-color: rgb(0, 119, 255);" (click)="bookAppointment(bookingData._id)">Book Appointment</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
